@@ -1,0 +1,59 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.2                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setParticles;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+IBModel
+{
+    model		directForcing;          //方法
+    ibForceMethod	ibForce;            //ibForce   ibForceInt
+    multiDirForcingIter	0;              //修正次数
+    motionSolver	newton;             //运动求解器
+}
+
+IBObjects
+{
+    Particle1
+    {
+        name                particle1;
+        type                IBParticle;
+        CG                  (0 0 0.05);   //圆心
+        radius              0.15;         //半径
+        autoPoint           yes;          //是否自动分布拉格朗日点
+        nPoints             100;          //如果不自动分布，拉格朗日点数
+        movable             no;           //是否可移动
+        rho                 2000;         //固体密度
+        motions
+        {
+            fixedLinearMotion             //sixDoFMotion  fixedLinearMotion
+            {U (4 0 0);}
+        }
+            calcWallRepulsive      no;        //是否计算壁面排斥力
+            calcParticleRepulsive  no;        //是否计算颗粒相互排斥力
+            epsilonP            1e-05;       //颗粒排斥力系数
+            epsilonW            1e-05;       //壁面排斥力系数
+    }
+}
+
+writeData
+{
+    writeInterval       5;
+    writeLagrPoints	  yes;
+    writeShadPoints	   no;
+    writeLagrForces	   no;
+    writeObjVTU		   no; 
+    writeIBForce	   no; 
+    writeObjData	   no;
+}
+
+// ************************************************************************* //

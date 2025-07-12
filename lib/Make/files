@@ -1,0 +1,20 @@
+eulerMesh/eulerMesh.C
+
+immersedBoundaryMethod/immersedBoundaryMethod.C
+
+IBObject/IBObject.C
+IBObject/IBParticle/IBParticle.C
+
+IBOStream/IBOStream.C
+
+IBModel/IBModel.C
+IBModel/directForcing/directForcing.C
+
+IBMotions/IBMotion/IBMotion.C
+IBMotions/IBMotion/sixDoFMotion/sixDoFMotion.C
+IBMotions/IBMotion/fixedLinearMotion/fixedLinearMotion.C
+IBMotions/IBMotionSolver/IBMotionSolver.C
+IBMotions/IBMotionSolver/newton/newton.C
+IBMotions/IBMotionSolver/modifiedNewton/modifiedNewton.C
+
+LIB = $(FOAM_USER_LIBBIN)/libImmersedBoundaryMethod

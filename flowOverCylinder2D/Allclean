@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+find . -type f -name 'log.*' -delete
+
+foamListTimes -rm
+rm -r outputData/*
+rm -r postProcessing/*
+rm -r processor*
+#------------------------------------------------------------------------------
