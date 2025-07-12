@@ -9,6 +9,8 @@ cd "${0%/*}" || exit 1
 #find . -type f -name 'log.*' -delete
 runApplication ./Allclean
 
+runApplication blockMesh
+
 runApplication decomposePar
 
 # Example with runParallel to run in parallel

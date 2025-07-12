@@ -7,7 +7,7 @@ cd ${0%/*} || exit 1
 find . -type f -name 'log.*' -delete
 
 foamListTimes -rm
-rm -r outputData/*
-rm -r postProcessing/*
+rm -r outputData
+rm -r postProcessing
 rm -r processor*
 #------------------------------------------------------------------------------

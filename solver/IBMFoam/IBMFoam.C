@@ -84,18 +84,23 @@ int main(int argc, char *argv[])
         // Pressure-velocity PISO corrector
         {
             #include "UEqn.H"
-            IBM.multiDirectForcing(U, ibForce);
+            
 
             // --- PISO loop
             while (pimple.correct())
             {
                 #include "pEqn.H"
             }
+
+            #include "ibForce.H"
+            IBM.multiDirectForcing(U, ibForce);
         }
 
         IBM.update();
 
-        IBM.write();
+        //mesh.update();
+
+        //IBM.write();
 
         runTime.write();
 

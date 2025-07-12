@@ -16,15 +16,15 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 application     IBMFoam;
-//startFrom       latestTime;
-startFrom       startTime;
+startFrom       latestTime;
+//startFrom       startTime;
 startTime       0;
 stopAt          endTime;
 //stopAt          writeNow;
-endTime         1;
+endTime         10;
 deltaT          0.0005;
 writeControl    adjustableRunTime;//runTime;//timeStep;
-writeInterval   0.1;
+writeInterval   0.01;
 purgeWrite      0;
 writeFormat     ascii;
 writePrecision  6;
@@ -32,7 +32,7 @@ writeCompression off;
 timeFormat      general;
 timePrecision   6;
 runTimeModifiable true;
-adjustTimeStep	yes;
+adjustTimeStep	no;
 maxCo		0.05;
 maxDeltaT	0.1;
 

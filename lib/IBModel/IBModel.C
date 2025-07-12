@@ -45,15 +45,20 @@ Foam::scalar Foam::IBModel::deltaFunc1D(scalar x_Eul, scalar x_Lag)
 {
     const scalar r = mag((x_Eul - x_Lag) / emesh_.h());
     scalar phiR = 0.0;
-    if (r < 0.5)
+
+    if( r < 2.0 )
     {
-        phiR = 1.0/3.0 * (1.0 + Foam::sqrt(-3.0 * (r*r) + 1.0));
+        phiR = (1.0/4.0)*(1.0 + Foam::cos(constant::mathematical::pi*0.5*r));
     }
-    else if (r <= 1.5)
-    {
-        phiR = 1.0/6.0 * (5.0 - 3.0*r - 
-            Foam::sqrt(-3.0* (1.0-r)*(1.0-r) + 1.0));    
-    }
+    // if (r < 0.5)
+    // {
+    //     phiR = 1.0/3.0 * (1.0 + Foam::sqrt(-3.0 * (r*r) + 1.0));
+    // }
+    // else if (r <= 1.5)
+    // {
+    //     phiR = 1.0/6.0 * (5.0 - 3.0*r - 
+    //         Foam::sqrt(-3.0* (1.0-r)*(1.0-r) + 1.0));    
+    // }
     else
     {
         phiR = 0.0;
