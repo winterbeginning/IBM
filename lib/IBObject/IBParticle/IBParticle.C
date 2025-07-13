@@ -410,15 +410,16 @@ void Foam::IBParticle::findNeiCells()
         emesh_.mesh(),
         dimensionedScalar("neighbourCells", dimless, 0)
     );
-
+  
     forAll(lPoints_, pointI)
-    {
+    {   
         forAll(emesh_.mesh().C(), cellI)
         { 
             scalar cellToLpoint = mag(emesh_.mesh().C()[cellI] - lPoints_[pointI]);
-            
-            scalar span = 2.0*emesh_.h();
-            
+            //scalar cellToLpoint = Foam::sqrt(Foam::pow(emesh_.mesh().C()[cellI].x() - lPoints_[pointI].x(),2)+Foam::pow(emesh_.mesh().C()[cellI].y() - lPoints_[pointI].y(),2));
+
+            scalar span = 2.0 * emesh_.h();
+          
             if (cellToLpoint <= span)
             {
                 neiCells_[pointI].append(cellI);
@@ -493,7 +494,7 @@ void Foam::IBParticle::findSolidCellsExt()
         scalar dR = mag(emesh_.mesh().C()[cellI] - center_);
         //- not very effective!
         
-        if (dR <= (R_ + 2.0*emesh_.h()))
+        if (dR <= (R_ + 2.0 * emesh_.h()))
         {
             solidCellsExt_.append(cellI);
             sldCellsExt[cellI] = 1;

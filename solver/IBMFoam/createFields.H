@@ -51,11 +51,11 @@ volVectorField ibForce
     )
 );
 
-volScalarField alphaSolid
+volScalarField meshRefine
 (
     IOobject
     (
-        "alphaSolid",
+        "meshRefine",
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,

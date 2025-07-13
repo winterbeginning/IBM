@@ -47,7 +47,7 @@ IBObjects
 
 writeData
 {
-    writeInterval       5;
+    writeInterval       1;
     writeLagrPoints	  yes;
     writeShadPoints	   no;
     writeLagrForces	   no;

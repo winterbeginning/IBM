@@ -33,13 +33,7 @@ Foam::directForcing::directForcing
     objects_(ibo),
 	nMDF_(readScalar(dict.lookup("multiDirForcingIter")))
 {
-    uLagrang_.setSize(objects_.size());
-    fLagrang_.setSize(objects_.size());
-    forAll(objects_, objI)
-    {
-        uLagrang_[objI].setSize(objects_[objI].nPoints(), vector::zero);
-        fLagrang_[objI].setSize(objects_[objI].nPoints(), vector::zero);
-    }
+
 }
 
 // -------------------------------Member Functions----------------------------//
@@ -64,6 +58,14 @@ Foam::volVectorField Foam::directForcing::ibForce(const volVectorField& U)
                 dimensionSet(0,1,-2,0,0,0,0), vector(0,0,0))
     );   
 
+    uLagrang_.setSize(objects_.size());
+    fLagrang_.setSize(objects_.size());
+    forAll(objects_, objI)
+    {
+        uLagrang_[objI].setSize(objects_[objI].nPoints(), vector::zero);
+        fLagrang_[objI].setSize(objects_[objI].nPoints(), vector::zero);
+    }
+    
     if (objects_.size() != 0)
     {
         const scalar dT = mesh_.time().deltaTValue();

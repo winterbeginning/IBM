@@ -14,7 +14,7 @@ const word ibForceMethod = IBMDict.subDict("IBModel").lookupOrDefault<word>("ibF
 
 if (ibForceMethod == "ibForce")
 {
-    ibForce = IBM.ibForce(U);
+    ibForce = IBM.ibForce(U);  //计算ibforce
 }
 else
 {
@@ -25,9 +25,12 @@ solve(UEqn == -fvc::grad(p) + ibForce);
 
 IBM.multiDirectForcing(U, ibForce);
 
+IBM.write();
 
-IBM.update();
+runTime.write();
 
-alphaSolid = IBM.calculateAlphaSolid();
+meshRefine = IBM.calculateAlphaSolid();  //计算自适应区域
 
-mesh.update();
+mesh.update(); //更新网格
+
+IBM.update();  //更新固体单元，网格info等等

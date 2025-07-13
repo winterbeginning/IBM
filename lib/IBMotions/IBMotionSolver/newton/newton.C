@@ -69,6 +69,15 @@ void  Foam::newton::moveObjects()
         }
 
         //- find new nei cells and solid cells
+        emesh_.updateEulerMeshInfo();
+        if(emesh_.mesh().nGeometricD() == 2)
+        {
+            ibo_[i].createParticle2D();
+        }
+        else
+        {
+            ibo_[i].createParticle3D();
+        }
         ibo_[i].findNeiCells();
         ibo_[i].findSolidCells();
         ibo_[i].findSolidCellsExt();
@@ -77,12 +86,12 @@ void  Foam::newton::moveObjects()
 
 Foam::volScalarField Foam::newton::calculateAlphaSolid()
 {
-    Info << "Calculating alphaSolid" << endl;
-    volScalarField alphaSolid_
+    Info << "Calculating meshRefine" << endl;
+    volScalarField meshRefine_
     (
         IOobject
         (
-            "alphaSolid",
+            "meshRefine",
             emesh_.mesh().time().timeName(),
             emesh_.mesh(),
             IOobject::NO_READ,
@@ -94,36 +103,108 @@ Foam::volScalarField Foam::newton::calculateAlphaSolid()
 
     forAll(ibo_, objI)
     {
-        const labelList& solidCells = ibo_[objI].solidCellsExt();
-        forAll(solidCells, cellI)
+        forAll(emesh_.mesh().C(), cellI)
         {
-            const label cellID = solidCells[cellI];
-            alphaSolid_[cellID] = volFraction(ibo_[objI], cellID);
+            meshRefine_[cellI] = volFraction(ibo_[objI], cellI);
         }
     }
-    return alphaSolid_;
+    return meshRefine_;
 }
+
+// Foam::scalar Foam::newton::volFraction(IBObject& ibobj, label cellID)
+// {
+//     const faceList& ff = emesh_.mesh().faces();
+//     const pointField& pp = emesh_.mesh().points();
+//     const cell& cc = emesh_.mesh().cells()[cellID];
+//     pointField cellVertices = cc.points(ff, pp);
+
+//     IBParticle& ibp = refCast<IBParticle>(ibobj);
+    
+//     List<scalar> phi_m(cellVertices.size(), 0.0);
+
+//     forAll(cellVertices, pointI)
+//     {
+//         phi_m[pointI] = LevelSetFunc(ibp.R(), cellVertices[pointI], ibp.CG());
+//         if (phi_m[pointI] < 0)
+//         {
+//             return 0;
+//         }
+//     }
+
+//     return (alphaIJK/sumPhi);
+// }
+
+// Foam::scalar Foam::newton::volFraction(IBObject& ibobj, label cellID)
+// {
+//     const faceList& ff = emesh_.mesh().faces();
+//     const pointField& pp = emesh_.mesh().points();
+//     const cell& cc = emesh_.mesh().cells()[cellID];
+//     pointField cellVertices = cc.points(ff, pp);
+
+//     IBParticle& ibp = refCast<IBParticle>(ibobj);
+    
+//     bool hasInside = false;
+//     bool hasOutside = false;
+
+//     // 检查顶点是否在物体内部/外部
+//     forAll(cellVertices, pointI)
+//     {
+//         scalar phi_m = LevelSetFunc(ibp.R(), cellVertices[pointI], ibp.CG());
+        
+//         if (phi_m <= 0) 
+//         {
+//             hasInside = true;
+//         }
+//         else 
+//         {
+//             hasOutside = true;
+//         }
+//     }
+    
+//     // 判断边界情况
+//     if (hasInside && hasOutside)
+//     {
+//         // 边界单元：根据距离比例估算过渡值
+//         return 0.5; // 0.3-0.7范围
+//     }
+//     else if (hasInside)
+//     {
+//         return 1.0; // 完全在内部
+//     }
+//     else
+//     {
+//         return 0.0; // 完全在外部
+//     }
+// }
 
 Foam::scalar Foam::newton::volFraction(IBObject& ibobj, label cellID)
 {
-    const faceList& ff = emesh_.mesh().faces();
-    const pointField& pp = emesh_.mesh().points();
-    const cell& cc = emesh_.mesh().cells()[cellID];
-    pointField cellVertices = cc.points(ff, pp);
-
+    // 获取单元中心坐标
+    const point& cellCenter = emesh_.mesh().C()[cellID];
+    
     IBParticle& ibp = refCast<IBParticle>(ibobj);
     
-    scalar alphaIJK(0.0);
-    scalar sumPhi(0.0);
+    // 计算到球体表面的距离（带符号）
+    scalar signedDist = LevelSetFunc(ibp.R(), cellCenter, ibp.CG()) * ibp.R();  //偏向外侧加密
     
-    forAll(cellVertices, pointI)
+    // 获取网格特征尺寸
+    scalar h = emesh_.h();
+    
+    // 如果单元在边界2h范围内
+    if (signedDist <= 5.0 * h && signedDist >= -5.0 * h)
     {
-        scalar phi_m = LevelSetFunc(ibp.R(), cellVertices[pointI], ibp.CG());
-        alphaIJK += -phi_m * HeavisideFunc(-phi_m);
-        sumPhi += mag(phi_m);
+        return 0.5;
     }
-
-    return (alphaIJK/sumPhi);
+    // 如果单元在物体内部
+    else if (signedDist <= 0)
+    {
+        return 1.0;
+    }
+    // 外部单元
+    else
+    {
+        return 0.0;
+    }
 }
 
 Foam::scalar Foam::newton::HeavisideFunc(scalar phi)

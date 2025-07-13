@@ -67,10 +67,16 @@ public:
 		{}
 
 	//- Member functions
+			
+			virtual void createParticle2D() = 0;
+
+			virtual void createParticle3D() = 0;
 
 			virtual void findNeiCells() = 0;
 
 			virtual void findSolidCells() = 0;
+
+			virtual void findSolidCellsExt() = 0;
 
 		//- Access
 			//- Object's geometry and identity
