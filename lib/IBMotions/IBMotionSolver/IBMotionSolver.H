@@ -78,6 +78,9 @@ public:
 		//- Move objects
 		virtual void moveObjects() = 0;
 
+		//- Calculate alphaSolid field
+		virtual volScalarField calculateAlphaSolid() = 0;
+
 }; //End class
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

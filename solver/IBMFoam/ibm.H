@@ -22,3 +22,12 @@ else
 }
 
 solve(UEqn == -fvc::grad(p) + ibForce);
+
+IBM.multiDirectForcing(U, ibForce);
+
+
+IBM.update();
+
+alphaSolid = IBM.calculateAlphaSolid();
+
+mesh.update();

@@ -67,40 +67,30 @@ void  Foam::newton::moveObjects()
             ibo_[i].updateVelocity();
             ibo_[i].movePoints();
         }
-        calculateAlphaSolid();
-        emesh_.mesh().update();
-        emesh_.updateEulerMeshInfo();
+
+        //- find new nei cells and solid cells
+        ibo_[i].findNeiCells();
+        ibo_[i].findSolidCells();
+        ibo_[i].findSolidCellsExt();
     }
 }
 
-Foam::volScalarField& Foam::newton::alphaSolid()
+Foam::volScalarField Foam::newton::calculateAlphaSolid()
 {
-    if (!alphaSolidPtr_.valid())
-    {
-        alphaSolidPtr_.reset
+    Info << "Calculating alphaSolid" << endl;
+    volScalarField alphaSolid_
+    (
+        IOobject
         (
-            new volScalarField
-            (
-                IOobject
-                (
-                    "alphaSolid",
-                    emesh_.mesh().time().timeName(),
-                    emesh_.mesh(),
-                    IOobject::NO_READ,
-                    IOobject::AUTO_WRITE
-                ),
-                emesh_.mesh(),
-                dimensionedScalar("zero", dimless, 0.0)
-            )
-        );
-    }
-    return alphaSolidPtr_();
-}
-
-void Foam::newton::calculateAlphaSolid()
-{
-    volScalarField& alphaSolid = this->alphaSolid();
-    alphaSolid = dimensionedScalar("zero", dimless, 0.0);
+            "alphaSolid",
+            emesh_.mesh().time().timeName(),
+            emesh_.mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        emesh_.mesh(),
+        dimensionedScalar("zero", dimless, 0.0)
+    );
 
     forAll(ibo_, objI)
     {
@@ -108,10 +98,10 @@ void Foam::newton::calculateAlphaSolid()
         forAll(solidCells, cellI)
         {
             const label cellID = solidCells[cellI];
-            alphaSolid[cellID] = volFraction(ibo_[objI], cellID);
+            alphaSolid_[cellID] = volFraction(ibo_[objI], cellID);
         }
     }
-    alphaSolid.correctBoundaryConditions();
+    return alphaSolid_;
 }
 
 Foam::scalar Foam::newton::volFraction(IBObject& ibobj, label cellID)

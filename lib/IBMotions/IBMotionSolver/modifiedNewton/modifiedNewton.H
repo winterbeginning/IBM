@@ -58,7 +58,10 @@ public:
 	{}
 	
 	//- Move objects
-	void moveObjects();
+	virtual void moveObjects();
+
+	//- Calculate alphaSolid field
+	virtual volScalarField calculateAlphaSolid();
 	
 	vector volIntegralU
 	(

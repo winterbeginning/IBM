@@ -92,13 +92,9 @@ int main(int argc, char *argv[])
                 #include "pEqn.H"
             }
 
-            #include "ibForce.H"
-            IBM.multiDirectForcing(U, ibForce);
+            #include "ibm.H"
+            
         }
-
-        IBM.update();
-
-        //mesh.update();
 
         //IBM.write();
 

@@ -733,9 +733,6 @@ void Foam::IBParticle::movePoints()
             <<" to "<<center_<<nl<<endl;
     }
 
-    //- find new nei cells and solid cells
-    findNeiCells();
-    findSolidCells();
 }
 
 const Foam::vector Foam::IBParticle::wallRepulsiveForce()

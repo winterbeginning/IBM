@@ -41,8 +41,6 @@ class newton
 	
 	autoPtr<IBModel>& ibmodelPtr_;
 
-	autoPtr<volScalarField> alphaSolidPtr_;
-
 public:
 	
 	TypeName("newton");
@@ -63,9 +61,7 @@ public:
 		//- Move objects
 		virtual void moveObjects();
 
-		virtual volScalarField& alphaSolid();
-
-		virtual void calculateAlphaSolid();
+		virtual volScalarField calculateAlphaSolid();
 
 		scalar volFraction
 		(

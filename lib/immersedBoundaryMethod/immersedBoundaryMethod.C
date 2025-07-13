@@ -111,6 +111,11 @@ void Foam::immersedBoundaryMethod::update()
 	return motionSolverPtr_->moveObjects();
 }
 
+Foam::volScalarField Foam::immersedBoundaryMethod::calculateAlphaSolid()
+{
+	return motionSolverPtr_->calculateAlphaSolid();
+}
+
 
 void Foam::immersedBoundaryMethod::write()
 {

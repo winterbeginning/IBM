@@ -15,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dynamicFvMesh   staticFvMesh;//staticFvMesh;dynamicRefineFvMesh
+dynamicFvMesh   dynamicRefineFvMesh;//staticFvMesh;dynamicRefineFvMesh
 
 // How often to refine
 refineInterval  1;
@@ -49,7 +49,6 @@ correctFluxes
     (rhoPhi none)
     (alphaPhi none)
     (ghf none)
-    (phi_0 none)
 );
 
 // Write the refinement level as a volScalarField

@@ -85,7 +85,39 @@ void  Foam::modifiedNewton::moveObjects()
             ibo_[i].updateVelocity();
             ibo_[i].movePoints();
         }
+        //- find new nei cells and solid cells
+        ibo_[i].findNeiCells();
+        ibo_[i].findSolidCells();
     }
+}
+
+Foam::volScalarField Foam::modifiedNewton::calculateAlphaSolid()
+{
+    Info << "Calculating alphaSolid" << endl;
+    volScalarField alphaSolid_
+    (
+        IOobject
+        (
+            "alphaSolid",
+            emesh_.mesh().time().timeName(),
+            emesh_.mesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        emesh_.mesh(),
+        dimensionedScalar("zero", dimless, 0.0)
+    );
+
+    forAll(ibo_, objI)
+    {
+        const labelList& solidCells = ibo_[objI].solidCells();
+        forAll(solidCells, cellI)
+        {
+            const label cellID = solidCells[cellI];
+            alphaSolid_[cellID] = volFraction(ibo_[objI], cellID);
+        }
+    }
+    return alphaSolid_;
 }
 
 Foam::vector Foam::modifiedNewton::volIntegralU

@@ -51,6 +51,25 @@ volVectorField ibForce
     )
 );
 
+volScalarField alphaSolid
+(
+    IOobject
+    (
+        "alphaSolid",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar
+    (
+        "0",
+        dimless,
+        0.0
+    )
+);
+
 Info<< "Reading field U\n" << endl;
 volVectorField U
 (

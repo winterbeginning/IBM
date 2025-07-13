@@ -19,7 +19,7 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/setInitialDeltaT.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/setDeltaT.H \
 UEqn.H \
 pEqn.H \
-ibForce.H \
+ibm.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/parRun.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/Time.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvMesh.H \
@@ -821,7 +821,7 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/setInitialDeltaT.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/setDeltaT.H :
 UEqn.H :
 pEqn.H :
-ibForce.H :
+ibm.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/parRun.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/Time.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvMesh.H :

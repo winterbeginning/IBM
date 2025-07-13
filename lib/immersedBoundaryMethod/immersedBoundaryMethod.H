@@ -67,6 +67,8 @@ public:
 
 	virtual void update();
 
+	virtual volScalarField calculateAlphaSolid();
+
 	virtual void write();
 
 }; //End class

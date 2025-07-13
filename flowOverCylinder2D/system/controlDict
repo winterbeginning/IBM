@@ -19,12 +19,12 @@ application     IBMFoam;
 startFrom       latestTime;
 //startFrom       startTime;
 startTime       0;
-stopAt          endTime;
-//stopAt          writeNow;
-endTime         10;
-deltaT          0.0005;
+//stopAt          endTime;
+stopAt          writeNow;
+endTime         1;
+deltaT          0.00005;
 writeControl    adjustableRunTime;//runTime;//timeStep;
-writeInterval   0.01;
+writeInterval   0.001;
 purgeWrite      0;
 writeFormat     ascii;
 writePrecision  6;
@@ -33,7 +33,7 @@ timeFormat      general;
 timePrecision   6;
 runTimeModifiable true;
 adjustTimeStep	no;
-maxCo		0.05;
+maxCo		0.5;
 maxDeltaT	0.1;
 
 functions
