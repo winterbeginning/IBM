@@ -1,0 +1,8 @@
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/CMakeFiles/edit_cache.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/CMakeFiles/rebuild_cache.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/lib/CMakeFiles/ImmersedBoundaryMethod.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/lib/CMakeFiles/edit_cache.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/lib/CMakeFiles/rebuild_cache.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/src/CMakeFiles/IBMFoam.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/src/CMakeFiles/edit_cache.dir
+/home/winter/OpenFOAM/winter-9/mysol/IBM/build/src/CMakeFiles/rebuild_cache.dir

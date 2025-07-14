@@ -72,6 +72,8 @@ public:
 
 			virtual void findSolidCells() = 0;
 
+			virtual void findSolidCellsExt() = 0;
+
 		//- Access
 			//- Object's geometry and identity
 				virtual const word& name() = 0;
